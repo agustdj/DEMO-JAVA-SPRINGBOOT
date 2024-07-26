@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+  <title>Add Product</title>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    body {
+        background-color: #f8f9fa; /* Light background color */
+    }
+    .custom-form {
+        background-color: #ffffff; /* Form background color */
+        border: 1px solid #dee2e6; /* Border color */
+        border-radius: 0.25rem; /* Border radius */
+        padding: 2rem; /* Padding inside the form */
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); /* Shadow for better visibility */
+    }
+    .custom-form .form-label {
+        color: #495057; /* Label color */
+    }
+    .custom-form .form-control,
+    .custom-form .form-control-file,
+    .custom-form .form-select {
+        border-color: #ced4da; /* Input border color */
+    }
+    .custom-form .btn-primary {
+        background-color: #007bff; /* Button background color */
+        border-color: #007bff; /* Button border color */
+    }
+    .custom-form .btn-primary:hover {
+        background-color: #0056b3; /* Button hover background color */
+        border-color: #0056b3; /* Button hover border color */
+    }
+    .custom-form .text-info {
+        color: #17a2b8; /* Text link color */
+    }
+    .custom-form .text-info:hover {
+        color: #117a8b; /* Text link hover color */
+    }
+  </style>
+</head>
+<body>
+<section layout:fragment="content" class="container mt-5 d-flex justify-content-center">
+  <div class="col-md-8 col-lg-6 custom-form">
+    <h1 class="mb-4 text-center">Add New Product</h1>
+    <form th:action="@{/products/add}" th:object="${product}" method="post" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name:</label>
+        <input type="text" th:field="*{name}" class="form-control" id="name" required>
+        <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+      </div>
+      <div class="mb-3">
+        <label for="price" class="form-label">Price:</label>
+        <input type="text" th:field="*{price}" class="form-control" id="price" required>
+        <div class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+      </div>
+      <div class="mb-3">
+        <label for="image" class="form-label">Image:</label>
+        <input class="form-control-file" type="file" id="image" name="imageProduct" accept="image/png,image/jpeg">
+        <div class="alert alert-warning" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></div>
+      </div>
+      <div class="mb-3">
+        <label for="category" class="form-label">Category:</label>
+        <select th:field="*{category}" class="form-select" id="category">
+          <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description:</label>
+        <textarea th:field="*{description}" class="form-control" id="description" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Add Product</button>
+      <a th:href="@{/products}" class="btn btn-link w-100 text-center mt-2">Cancel</a>
+    </form>
+  </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
