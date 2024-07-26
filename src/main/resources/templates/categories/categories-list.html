@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+  <title th:text="${title} ?: 'Categories List'">Categories List</title>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa; /* Light background color */
+    }
+    .container {
+      background-color: #ffffff; /* Container background color */
+      border-radius: 0.25rem; /* Rounded corners for the container */
+      padding: 2rem; /* Padding inside the container */
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); /* Shadow for better visibility */
+    }
+    .btn-primary {
+      background-color: #007bff; /* Button background color */
+      border-color: #007bff; /* Button border color */
+    }
+    .btn-primary:hover {
+      background-color: #0056b3; /* Button hover background color */
+      border-color: #0056b3; /* Button hover border color */
+    }
+    .table {
+      margin-top: 1rem; /* Space above the table */
+    }
+    .table th, .table td {
+      vertical-align: middle; /* Center align text vertically */
+    }
+    .table-dark th {
+      background-color: #343a40; /* Dark background for table header */
+      color: #ffffff; /* White text for table header */
+    }
+    .btn-success, .btn-danger {
+      margin-right: 0.5rem; /* Space between buttons */
+    }
+  </style>
+</head>
+<body>
+<section layout:fragment="content" class="container mt-5">
+  <h1 class="mb-4 text-center">Categories List</h1>
+  <div class="d-flex justify-content-end mb-3">
+    <a th:href="@{/categories/add}" class="btn btn-primary">Add New Category</a>
+  </div>
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="category : ${categories}">
+      <td th:text="${category.id}"></td>
+      <td th:text="${category.name}"></td>
+      <td>
+        <a th:href="@{/categories/edit/{id}(id=${category.id})}" class="btn btn-success btn-sm">Edit</a>
+        <a th:href="@{/categories/delete/{id}(id=${category.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

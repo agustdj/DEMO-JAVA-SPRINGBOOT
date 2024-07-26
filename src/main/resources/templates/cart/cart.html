@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <title th:text="${title} ?: 'Your Cart'">Your Cart</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background color */
+        }
+        .custom-form {
+            background-color: #ffffff; /* Form background color */
+            border: 1px solid #dee2e6; /* Border color */
+            border-radius: 0.25rem; /* Border radius */
+            padding: 2rem; /* Padding inside the form */
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); /* Shadow for better visibility */
+        }
+        .custom-form .form-label {
+            color: #495057; /* Label color */
+        }
+        .custom-form .form-control {
+            border-color: #ced4da; /* Input border color */
+        }
+        .custom-form .btn-primary {
+            background-color: #007bff; /* Button background color */
+            border-color: #007bff; /* Button border color */
+        }
+        .custom-form .btn-primary:hover {
+            background-color: #0056b3; /* Button hover background color */
+            border-color: #0056b3; /* Button hover border color */
+        }
+        .custom-form .btn-link {
+            color: #6c757d; /* Link color */
+        }
+        .custom-form .btn-link:hover {
+            color: #495057; /* Link hover color */
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="content" class="container mt-5 d-flex justify-content-center">
+    <div class="col-md-8 col-lg-6 custom-form">
+        <h1 class="mb-4 text-center">Your Cart</h1>
+        <div th:if="${cartItems.isEmpty()}" class="alert alert-info">Your cart is empty.</div>
+        <table class="table" th:unless="${cartItems.isEmpty()}">
+            <thead class="table-light">
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cartItems}">
+                <td th:text="${item.product.name}"></td>
+                <td th:text="${item.quantity}"></td>
+                <td>
+                    <a th:href="@{/cart/remove/{productId}(productId=${item.product.id})}" class="btn btn-danger btn-sm">Remove</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="mt-3 text-center">
+            <a th:href="@{/cart/clear}" class="btn btn-secondary">Clear Cart</a>
+            <a th:href="@{/order/checkout}" class="btn btn-primary mb-3">Check Out</a>
+            <a th:href="@{/products}" class="btn btn-link">Cancel</a>
+        </div>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
