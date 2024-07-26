@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <title th:text="${title} ?: 'Place Order'">Place Order</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background color */
+        }
+        .custom-form {
+            background-color: #ffffff; /* Form background color */
+            border: 1px solid #dee2e6; /* Border color */
+            border-radius: 0.25rem; /* Border radius */
+            padding: 2rem; /* Padding inside the form */
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); /* Shadow for better visibility */
+        }
+        .custom-form .form-label {
+            color: #495057; /* Label color */
+        }
+        .custom-form .form-control {
+            border-color: #ced4da; /* Input border color */
+        }
+        .custom-form .btn-primary {
+            background-color: #007bff; /* Button background color */
+            border-color: #007bff; /* Button border color */
+        }
+        .custom-form .btn-primary:hover {
+            background-color: #0056b3; /* Button hover background color */
+            border-color: #0056b3; /* Button hover border color */
+        }
+        .custom-form .btn-link {
+            color: #6c757d; /* Link color */
+        }
+        .custom-form .btn-link:hover {
+            color: #495057; /* Link hover color */
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="content" class="container mt-5 d-flex justify-content-center">
+    <div class="col-md-8 col-lg-6 custom-form">
+        <h1 class="mb-4 text-center">Place Your Order</h1>
+        <form th:action="@{/order/submit}" method="post" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="customerName" class="form-label">Your Name:</label>
+                <input type="text" id="customerName" name="customerName" class="form-control" required>
+                <div class="invalid-feedback">Please provide your name.</div>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Your Phone Number:</label>
+                <input type="text" id="phone" name="phone" class="form-control" required>
+                <div class="invalid-feedback">Please provide your phone number.</div>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Your Address:</label>
+                <input type="text" id="address" name="address" class="form-control" required>
+                <div class="invalid-feedback">Please provide your address.</div>
+            </div>
+            <div class="mb-3">
+                <label for="note" class="form-label">Note:</label>
+                <textarea id="note" name="note" class="form-control"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="payment" class="form-label">Payment Method:</label>
+                <select id="payment" name="payment" class="form-control">
+                    <option value="Credit Card">Credit Card</option>
+                    <option value="PayPal">PayPal</option>
+                    <option value="Bank Transfer">Bank Transfer</option>
+                    <!-- Add other payment methods as needed -->
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Submit Order</button>
+            <a th:href="@{/cart}" class="btn btn-link w-100 text-center mt-2">Cancel</a>
+        </form>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Bootstrap's form validation
+    (function () {
+        'use strict';
+        var forms = document.querySelectorAll('.needs-validation');
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
+</body>
+</html>
